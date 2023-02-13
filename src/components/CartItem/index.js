@@ -8,13 +8,27 @@ import './index.css'
 const CartItem = props => (
   <CartContext.Consumer>
     {value => {
-      const {removeCartItem} = value
+      const {
+        removeCartItem,
+        addCartItem,
+        decrementCartItemQuantity,
+        incrementCartItemQuantity,
+      } = value
       const {cartItemDetails} = props
       const {id, title, brand, quantity, price, imageUrl} = cartItemDetails
+
       const onRemoveCartItem = () => {
-        removeCartItem(id)
+        removeCartItem({id})
       }
       // TODO: Update the functionality to increment and decrement quantity of the cart item
+
+      const increaseItem = () => {
+        incrementCartItemQuantity({...cartItemDetails})
+      }
+
+      const decreaseItem = () => {
+        decrementCartItemQuantity({...cartItemDetails})
+      }
 
       return (
         <li className="cart-item">
@@ -25,11 +39,21 @@ const CartItem = props => (
               <p className="cart-product-brand">by {brand}</p>
             </div>
             <div className="cart-quantity-container">
-              <button type="button" className="quantity-controller-button">
+              <button
+                type="button"
+                className="quantity-controller-button"
+                onClick={decreaseItem}
+                data-testid="minus"
+              >
                 <BsDashSquare color="#52606D" size={12} />
               </button>
               <p className="cart-quantity">{quantity}</p>
-              <button type="button" className="quantity-controller-button">
+              <button
+                type="button"
+                className="quantity-controller-button"
+                onClick={increaseItem}
+                data-testid="plus"
+              >
                 <BsPlusSquare color="#52606D" size={12} />
               </button>
             </div>
@@ -48,6 +72,7 @@ const CartItem = props => (
             className="delete-button"
             type="button"
             onClick={onRemoveCartItem}
+            data-testid="remove"
           >
             <AiFillCloseCircle color="#616E7C" size={20} />
           </button>

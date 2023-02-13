@@ -19,9 +19,88 @@ class App extends Component {
 
   //   TODO: Add your code for remove all cart items, increment cart item quantity, decrement cart item quantity, remove cart item
 
+  removeAllCartItems = () => {
+    this.setState({cartList: []})
+  }
+
+  removeCartItem = product => {
+    const {cartList} = this.state
+    const newList = cartList.filter(item => item.id !== product.id)
+    this.setState({cartList: newList})
+  }
+
   addCartItem = product => {
-    this.setState(prevState => ({cartList: [...prevState.cartList, product]}))
+    const {cartList} = this.state
+    const checkList = cartList.filter(item => item.id === product.id)
     //   TODO: Update the code here to implement addCartItem
+    if (cartList.length > 0 && checkList.length > 0) {
+      const sameProduct = cartList.map(item =>
+        item.id === product.id
+          ? {
+              id: item.id,
+              availability: item.availability,
+              brand: item.brand,
+              description: item.description,
+              imageUrl: item.imageUrl,
+              price: item.price,
+              quantity: item.quantity + product.quantity,
+              totalReviews: item.totalReviews,
+              title: item.title,
+              rating: item.rating,
+            }
+          : item,
+      )
+      this.setState({cartList: [...sameProduct]})
+    } else {
+      this.setState(prevState => ({cartList: [...prevState.cartList, product]}))
+    }
+  }
+
+  incrementCartItemQuantity = product => {
+    const {cartList} = this.state
+
+    //   TODO: Update the code here to implement addCartItem
+    const sameProduct = cartList.map(item =>
+      item.id === product.id
+        ? {
+            id: item.id,
+            availability: item.availability,
+            brand: item.brand,
+            description: item.description,
+            imageUrl: item.imageUrl,
+            price: item.price,
+            quantity: item.quantity + 1,
+            totalReviews: item.totalReviews,
+            title: item.title,
+            rating: item.rating,
+          }
+        : item,
+    )
+
+    this.setState({cartList: [...sameProduct]})
+  }
+
+  decrementCartItemQuantity = product => {
+    const {cartList} = this.state
+
+    const newCartList = cartList.map(item =>
+      item.id === product.id && item.quantity > 0
+        ? {
+            id: item.id,
+            availability: item.availability,
+            brand: item.brand,
+            description: item.description,
+            imageUrl: item.imageUrl,
+            price: item.price,
+            quantity: item.quantity - 1,
+            totalReviews: item.totalReviews,
+            title: item.title,
+            rating: item.rating,
+          }
+        : item,
+    )
+    const finalCartList = newCartList.filter(item => item.quantity > 0)
+    this.setState({cartList: [...finalCartList]})
   }
 
   render() {
@@ -33,6 +112,9 @@ class App extends Component {
           cartList,
           addCartItem: this.addCartItem,
           removeCartItem: this.removeCartItem,
+          incrementCartItemQuantity: this.incrementCartItemQuantity,
+          decrementCartItemQuantity: this.decrementCartItemQuantity,
+          removeAllCartItems: this.removeAllCartItems,
         }}
       >
         <Switch>

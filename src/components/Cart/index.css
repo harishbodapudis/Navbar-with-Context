@@ -4,6 +4,17 @@
   min-height: 75vh;
 }
 
+.remove-all {
+  color: #0b69ff;
+  display: flex;
+  align-self: flex-end;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: transparent;
+  border: 0px;
+  font-size: 16px;
+}
+
 @media screen and (min-width: 768px) {
   .cart-container {
     min-height: 90vh;
@@ -38,3 +49,36 @@
 }
 
 /* Write your CSS here */
+.summary {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+.summary-container {
+  width: 200px;
+}
+.summary-card-total-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.total-price-title {
+  color: #616e7c;
+  font-size: 18px;
+}
+.total-price {
+  color: #000000;
+  font-weight: bold;
+  margin-left: 2px;
+}
+.total-items {
+  color: #616e7c;
+}
+
+.checkout-btn {
+  background-color: #0b69ff;
+  color: #ffffff;
+  border: 0px;
+  width: 100%;
+  padding: 8px;
+}
